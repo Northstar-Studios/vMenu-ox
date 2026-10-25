@@ -2,8 +2,8 @@ import os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
-MENU_HTML = r"C:/Users/lucky/OneDrive/Desktop/[fsrp]/fsrp-nativeui-nui/nui/index.html"
-IMAGES_DIR = r"C:/Users/lucky/OneDrive/Desktop/[fsrp]/fsrp-nativeui-nui/images"
+MENU_HTML = r"C:/Users/lucky/OneDrive/Desktop/[nsrp]/nsrp-nativeui-nui/nui/index.html"
+IMAGES_DIR = r"C:/Users/lucky/OneDrive/Desktop/[nsrp]/nsrp-nativeui-nui/images"
 STORAGE = os.path.join(REPO, "vMenuServer", "storage.html")
 OUT_DIR = os.path.join(REPO, "build", "vMenu", "nui")
 OUT = os.path.join(OUT_DIR, "index.html")

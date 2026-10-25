@@ -1,7 +1,7 @@
-# fsrp-vmenu-v2
+# nsrp-vmenu-v2
 
-FSRP's vMenu — the [vMenu](https://github.com/TomGrobbe/vMenu) admin/player menu, **re-skinned to
-render through our custom FSRP NativeUI (NUI)** and made **extensible in Lua**. All of vMenu's
+NSRP's vMenu — the [vMenu](https://github.com/TomGrobbe/vMenu) admin/player menu, **re-skinned to
+render through our custom NSRP NativeUI (NUI)** and made **extensible in Lua**. All of vMenu's
 features are intact; the rendering, look, and authoring workflow are what changed.
 
 Based on [vMenu](https://github.com/TomGrobbe/vMenu) by Tom Grobbe and the
@@ -21,18 +21,18 @@ Based on [vMenu](https://github.com/TomGrobbe/vMenu) by Tom Grobbe and the
 
 ## What we changed
 
-### 1. Rendering — MenuAPI → FSRP NativeUI (NUI)
+### 1. Rendering — MenuAPI → NSRP NativeUI (NUI)
 vMenu draws through **MenuAPI**; we vendored MenuAPI's source (`MenuAPI/`, patched — replaces the
 `MenuAPI.FiveM` NuGet package) and added a bridge (`MenuAPI/MenuNui.cs`) that **disables the native
 `DrawRect`/`DrawSprite` rendering and serialises each menu to our NUI** (`SendNuiMessage`). Input
 stays native (keyboard nav). The NUI is a Vite + React + TypeScript + Tailwind + Satoshi app,
 rendered on vMenu's `ui_page` (merged with vMenu's existing `storage.html`). See `NUI-RESKIN.md`.
 
-- **FSRP store theme** — blue gradient selection (`#4059d6 → #2b42a3`), glass surfaces, Satoshi font,
+- **NSRP store theme** — blue gradient selection (`#4059d6 → #2b42a3`), glass surfaces, Satoshi font,
   configurable accent colour (drives selection, stat bars, checkboxes, counter).
-- **Accent synced to fsrp-hud** — `addons/accent_sync.lua` pulls the server-wide accent from
-  `exports['fsrp-hud']:GetCurrentAccentColor()` on start and follows the `fsrp-hud:accentColorChanged`
-  event live. Falls back to the default accent if fsrp-hud isn't running.
+- **Accent synced to nsrp-hud** — `addons/accent_sync.lua` pulls the server-wide accent from
+  `exports['nsrp-hud']:GetCurrentAccentColor()` on start and follows the `nsrp-hud:accentColorChanged`
+  event live. Falls back to the default accent if nsrp-hud isn't running.
 - **GTA text colour codes** (`~r~`, `~g~`, `~b~`, `~h~`, `~s~`, `~n~`, …) parsed to real colours.
 - **Menu alignment** left / centre / right — follows vMenu's "Right Align Menu" setting, plus a
   convar override (`setr vmenu_nui_side "center"`).
@@ -121,11 +121,11 @@ dotnet build vMenuServer/vMenuServer.csproj -c Release  # -> build/vMenu/vMenuSe
 python tools/build_nui.py                               # -> build/vMenu/nui/index.html (+ images)
 ```
 
-The NUI source lives in the FSRP NativeUI project; `tools/build_nui.py` merges the built menu UI with
+The NUI source lives in the NSRP NativeUI project; `tools/build_nui.py` merges the built menu UI with
 vMenu's `storage.html`. Lua files (`lua/`, `addons/`, `server/addons/`) are loaded directly.
 
 ---
 
 ## Credits
 - vMenu — Tom Grobbe. vMenu-ox — Gravxd & DukeOfCheese. MenuAPI — Tom Grobbe.
-- FSRP NativeUI NUI, Lua bridge, addon system — Florida-Roleplay.
+- NSRP NativeUI NUI, Lua bridge, addon system — Florida-Roleplay.

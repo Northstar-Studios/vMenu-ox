@@ -101,8 +101,8 @@ local function notify(src, description, ntype)
 end
 
 -- Anti-spam: cap how fast a player can conjure weapons. This is what stops the "spawn weapon -> drop
--- on the ground -> respawn -> drop" flood loop. Tunable via convars; backed by fsrp-core's RateLimit
--- (falls back to allowing the action if fsrp-core isn't running so weapons never hard-break).
+-- on the ground -> respawn -> drop" flood loop. Tunable via convars; backed by nsrp-core's RateLimit
+-- (falls back to allowing the action if nsrp-core isn't running so weapons never hard-break).
 local SPAWN_MAX = GetConvarInt('vmenu:ox_spawn_max', 6)
 local SPAWN_WINDOW = GetConvarInt('vmenu:ox_spawn_window', 8000)
 local SPAWN_INTERVAL = GetConvarInt('vmenu:ox_spawn_interval', 500)
@@ -111,9 +111,9 @@ local SPAWN_INTERVAL = GetConvarInt('vmenu:ox_spawn_interval', 500)
 ---@return boolean allowed
 local function spawnAllowed(src)
     local ok, allowed = pcall(function()
-        return exports['fsrp-core']:RateLimit(src, 'weapon_spawn', SPAWN_MAX, SPAWN_WINDOW, SPAWN_INTERVAL)
+        return exports['nsrp-core']:RateLimit(src, 'weapon_spawn', SPAWN_MAX, SPAWN_WINDOW, SPAWN_INTERVAL)
     end)
-    if not ok then return true end -- fsrp-core down: don't block weapon spawning outright
+    if not ok then return true end -- nsrp-core down: don't block weapon spawning outright
     if not allowed then
         notify(src, 'You are spawning weapons too fast — slow down.', 'error')
     end

@@ -1,21 +1,21 @@
-# vMenu ⇄ ox_inventory weapon integration (FSRP)
+# vMenu ⇄ ox_inventory weapon integration (NSRP)
 
 The vMenu weapon spawner no longer gives weapons to the ped with native calls (which used the default
 GTA weapon wheel and desynced with ox_inventory). Every weapon action now flows into **ox_inventory**
-as inventory items, and player inventories are keyed to the active **fsrp-characters** character.
+as inventory items, and player inventories are keyed to the active **nsrp-characters** character.
 
 ## What changed
 
 ### ox_inventory (`Z:\resources\[Scripts]\ox_inventory`) — already live, no rebuild needed
-- `modules/mysql/server.lua` — added a `fsrp` framework branch: `playerTable = citizen`, `playerColumn = id`.
+- `modules/mysql/server.lua` — added a `nsrp` framework branch: `playerTable = citizen`, `playerColumn = id`.
   The trunk/glovebox `SHOW COLUMNS` is now `pcall`-guarded so a missing vehicle table can't break init.
-- `modules/bridge/fsrp/server.lua` + `client.lua` — **new** custom framework bridge. On
-  `fsrp-characters:characterSelected` it loads the character's inventory (owner = `tostring(citizen.id)`);
+- `modules/bridge/nsrp/server.lua` + `client.lua` — **new** custom framework bridge. On
+  `nsrp-characters:characterSelected` it loads the character's inventory (owner = `tostring(citizen.id)`);
   on a character switch it saves+unloads the previous one first. Player-drop saving is handled by ox core.
 - Player inventory JSON persists to `citizen.inventory` (LONGTEXT column, auto-added / already added).
 
 ### server.cfg
-- `setr inventory:framework fsrp` (before `ensure [Scripts]`).
+- `setr inventory:framework nsrp` (before `ensure [Scripts]`).
 
 ### vMenu (this repo → deploy to `Z:\resources\[Scripts]\vMenu`) — **requires a C# rebuild**
 - `build/vMenu/server/weapons_ox.lua` — **new** net-event handlers that call
@@ -52,11 +52,11 @@ the vMenu server picks them up automatically.
    `citizen.inventory` column exists — ox auto-adds it).
 2. **vMenu**: rebuild the C# (`dotnet build vMenu.sln -c Release`, or the repo's build task), copy the
    produced `build/vMenu` to `Z:\resources\[Scripts]\vMenu`, then `ensure`/restart `vMenu`.
-3. Restart the server (or `refresh` + restart `ox_inventory`, `fsrp-characters`, `vMenu`).
+3. Restart the server (or `refresh` + restart `ox_inventory`, `nsrp-characters`, `vMenu`).
 
 ## Config
 - `setr vmenu:ox_default_ammo 250` — ammo given/loaded per weapon (default 250).
-- `setr inventory:weaponanims false` — disables ox's draw/holster animation (FSRP has its own).
+- `setr inventory:weaponanims false` — disables ox's draw/holster animation (NSRP has its own).
 
 ## Ammo / reload
 Weapons use the **native GTA ammo system** — no ammo items in the inventory. vMenu gives each weapon
@@ -64,13 +64,13 @@ loaded via `metadata.ammo` (`vmenu:ox_default_ammo`), and native **R** reloads f
 mirrors the game's ammo, so nothing blocks native reload.
 
 ## Vehicle storage (trunk / glovebox)
-FSRP has no vehicle-ownership table, so storage is keyed by **saved-vehicle identity**, not the (mutable) plate:
+NSRP has no vehicle-ownership table, so storage is keyed by **saved-vehicle identity**, not the (mutable) plate:
 - vMenu tags each spawned Saved Vehicle with the statebag `svStorageId` (the save name). `SpawnVehicle`
   (`CommonFunctions.cs`) fires `vMenu:ox:tagVehicleStorage`, and `server/vehicle_storage_ox.lua` sets the
   statebag **server-side** (works with `sv_stateBagStrictMode true`; includes a near-the-vehicle guard).
-- `modules/bridge/fsrp/server.lua` `server.getOwnedVehicleId(entity)` returns `sv:<saveName>` for tagged
+- `modules/bridge/nsrp/server.lua` `server.getOwnedVehicleId(entity)` returns `sv:<saveName>` for tagged
   (saved) vehicles — plate-independent, survives respawn. Untagged/non-saved vehicles return **nil**.
-- **Saved vehicles** persist in the `fsrp_vehicle_storage` table (`plate` PK, `trunk`, `glovebox`); the fsrp
+- **Saved vehicles** persist in the `fsrp_vehicle_storage` table (`plate` PK, `trunk`, `glovebox`); the nsrp
   mysql branch points ox's vehicle table there, and rows are auto-created (`INSERT IGNORE`) on first access.
 - **Non-saved vehicles** are **session-only**: with a nil key ox marks the storage `datastore`
   (modules/inventory/server.lua), so it's never written to the DB and is evicted when the vehicle despawns.

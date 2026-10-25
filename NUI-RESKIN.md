@@ -1,6 +1,6 @@
 # vMenu — NativeUI NUI reskin
 
-vMenu's menus are rendered through the FSRP **NativeUI NUI** instead of MenuAPI's native
+vMenu's menus are rendered through the NSRP **NativeUI NUI** instead of MenuAPI's native
 `DrawRect`/`DrawSprite`. All of vMenu's feature logic is untouched — only the *rendering* changed.
 
 ## How it works
@@ -31,8 +31,8 @@ dotnet build vMenuServer/vMenuServer.csproj -c Release
 python tools/build_nui.py
 ```
 
-`tools/build_nui.py` reads the menu UI from `../fsrp-nativeui-nui/nui/index.html` and the images
-from `../fsrp-nativeui-nui/images/`. Point those at wherever the FSRP NativeUI build lives.
+`tools/build_nui.py` reads the menu UI from `../nsrp-nativeui-nui/nui/index.html` and the images
+from `../nsrp-nativeui-nui/images/`. Point those at wherever the NSRP NativeUI build lives.
 
 ## Deploy
 
@@ -41,7 +41,7 @@ Copy `build/vMenu/` into your server's `resources/` (rename to `vMenu`), `ensure
 
 ## Notes / TODO
 
-- Menu side defaults to right (`MenuNui.Side`); accent defaults to FSRP blue
+- Menu side defaults to right (`MenuNui.Side`); accent defaults to NSRP blue
   (`MenuNui.SetAccent(r,g,b)`). Wire these to vMenu config / an export if desired.
 - Icon → badge mapping covers LOCK / STAR / WARNING / TICK; other MenuAPI icons render no badge.
 - Input is still native keyboard nav (arrows / enter / backspace) — unchanged from vMenu.

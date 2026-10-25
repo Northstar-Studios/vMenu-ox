@@ -22,7 +22,7 @@ end
 CreateThread(function()
     for _ = 1, 10 do
         Wait(500)
-        local ok, color = pcall(function() return exports["fsrp-hud"]:GetCurrentAccentColor() end)
+        local ok, color = pcall(function() return exports["nsrp-hud"]:GetCurrentAccentColor() end)
         if ok and color then
             applyAccent(color)
             break
@@ -30,6 +30,6 @@ CreateThread(function()
     end
 end)
 
-AddEventHandler("fsrp-hud:accentColorChanged", function(color)
+AddEventHandler("nsrp-hud:accentColorChanged", function(color)
     applyAccent(color)
 end)

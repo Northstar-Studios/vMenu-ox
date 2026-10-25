@@ -5,8 +5,8 @@
     entity SERVER-SIDE so it works with sv_stateBagStrictMode enabled (client writes to entity statebags are
     restricted/blocked under strict mode; server writes are always allowed).
 
-    ox_inventory's fsrp bridge reads this statebag to key the vehicle's trunk/glovebox storage to the saved
-    vehicle identity (see ox_inventory/modules/bridge/fsrp/server.lua getOwnedVehicleId).
+    ox_inventory's nsrp bridge reads this statebag to key the vehicle's trunk/glovebox storage to the saved
+    vehicle identity (see ox_inventory/modules/bridge/nsrp/server.lua getOwnedVehicleId).
 ]]
 
 RegisterNetEvent('vMenu:ox:tagVehicleStorage', function(netId, saveName)
