@@ -128,4 +128,4 @@ vMenu's `storage.html`. Lua files (`lua/`, `addons/`, `server/addons/`) are load
 
 ## Credits
 - vMenu — Tom Grobbe. vMenu-ox — Gravxd & DukeOfCheese. MenuAPI — Tom Grobbe.
-- NSRP NativeUI NUI, Lua bridge, addon system — Florida-Roleplay.
+- NSRP NativeUI NUI, Lua bridge, addon system — Northstar-Studios.
